@@ -17,6 +17,7 @@
     "url": "git://github.com/mathildelemee/hubot-twitter.git"
   },
   "dependencies": {
+    "hubot": "2.0.0"
   },
   "devDependencies": {
     "coffee-script": "1.1.3",
