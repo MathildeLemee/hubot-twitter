@@ -9,7 +9,7 @@ send an tweet to your Hubot and he will send an tweet back with the response.
 
 * Add `hubot-twitter` as a dependency in your hubot's `package.json`
 * Install dependencies with `npm install`
-* Run hubot with `bin/hubot -a twitter`
+* Run hubot with `bin/hubot -a twitter -n the_name_of_the_twitter_bot_account`
 
 ### Note if running on Heroku
 
@@ -36,18 +36,9 @@ and make sure the request type is set to `GET`.
 
 ## Contribute
 
-Here's the most direct way to get your work merged into the project.
-
-1. Fork the project
-2. Clone down your fork
-3. Create a feature branch
-4. Hack away and add tests, not necessarily in that order
-5. Make sure everything still passes by running tests
-6. If necessary, rebase your commits into logical chunks without errors
-7. Push the branch up to your fork
-8. Send a pull request for your branch
+Just send pull request if needed or fill an issue !
 
 ## Copyright
 
-Copyright &copy; Mathilde Lemée. See LICENSE for details.
+Copyright &copy; Mathilde Lemee. See LICENSE for details.
 
