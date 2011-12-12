@@ -30,7 +30,11 @@ class Twitter extends Adapter
    bot.tweet self.robot.name, (err, data) ->
      reg = new RegExp('@'+self.robot.name,'i')
      console.log "received #{data.text} from #{data.user.screen_name}"
-     self.receive new Robot.TextMessage data.user.screen_name,data.text.replace reg, self.robot.name
+
+     message = data.text.replace reg, self.robot.name
+     console.log "hubot command: #{message}"
+
+     self.receive new Robot.TextMessage data.user.screen_name, message
      if err
        console.log "received error: #{err}"
 
