@@ -63,7 +63,7 @@ class TwitterStreaming extends EventEmitter
       throw new Error("Not enough parameters provided. I need a key, a secret, a token, a secret token")
 
  tweet: (track,callback) ->
-   @post "/1/statuses/filter.json?track=#{track}", '', callback
+   @post "/1/statuses/filter.json?track=@#{track}", '', callback
 
  send : (user,tweetText) ->
         console.log "send twitt to #{user} with text #{tweetText}"
