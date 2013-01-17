@@ -1,5 +1,4 @@
-Robot        = require('hubot').robot()
-Adapter      = require('hubot').adapter()
+{Robot, Adapter, TextMessage, EnterMessage, LeaveMessage, Response} = require 'hubot'
 
 HTTPS        = require 'https'
 EventEmitter = require('events').EventEmitter
@@ -7,6 +6,7 @@ oauth        = require('oauth')
 
 class Twitter extends Adapter
  send: (user, strings...) ->
+   console.log "Sending strings to user: " + user
    strings.forEach (str) =>
      text = str
      console.log text
@@ -15,8 +15,14 @@ class Twitter extends Adapter
        @bot.send(user,tweetText)
 
  reply: (user, strings...) ->
+   console.log "Replying"
    strings.forEach (text) =>
-       @bot.reply(user,text)
+       console.log text
+       @bot.send(user,text)
+ 
+ command: (command, strings...) ->
+    console.log command
+    @bot.send command, strings...
 
  run: ->
    self = @
@@ -27,14 +33,14 @@ class Twitter extends Adapter
     tokensecret : process.env.HUBOT_TWITTER_TOKEN_SECRET
    bot = new TwitterStreaming(options)
 
-   bot.tweet self.robot.name, (err, data) ->
+   bot.tweet self.robot.name, (data, err) ->
      reg = new RegExp('@'+self.robot.name,'i')
      console.log "received #{data.text} from #{data.user.screen_name}"
 
      message = data.text.replace reg, self.robot.name
      console.log "hubot command: #{message}"
 
-     self.receive new Robot.TextMessage data.user.screen_name, message
+     self.receive new TextMessage data.user.screen_name, message
      if err
        console.log "received error: #{err}"
 
@@ -104,8 +110,6 @@ class TwitterStreaming extends EventEmitter
        data = data.slice(index + 2)
        if json.length > 0
           try
-             console.log "json"+json
-             callback null, JSON.parse(json)
+             callback JSON.parse(json), null
           catch err
              console.log "error parse"+json
-             callback null, data || { }
