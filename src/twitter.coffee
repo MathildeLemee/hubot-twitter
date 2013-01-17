@@ -1,5 +1,4 @@
-Robot        = require('hubot').robot()
-Adapter      = require('hubot').adapter()
+{Robot, Adapter} = require 'hubot'
 
 HTTPS        = require 'https'
 EventEmitter = require('events').EventEmitter
