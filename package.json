@@ -17,7 +17,6 @@
     "url": "git://github.com/mathildelemee/hubot-twitter.git"
   },
   "dependencies": {
-    "hubot": ">=2.0.5",
     "oauth": "0.9.10"
   },
   "devDependencies": {

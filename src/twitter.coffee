@@ -1,3 +1,4 @@
+# Hubot dependencies
 {Robot, Adapter, TextMessage, EnterMessage, LeaveMessage, Response} = require 'hubot'
 
 HTTPS        = require 'https'
@@ -34,26 +35,27 @@ class Twitter extends Adapter
     tokensecret : process.env.HUBOT_TWITTER_TOKEN_SECRET
 
    bot = new TwitterStreaming(options)
-
+   @x = 0
    bot.tweet self.robot.name, (data, err) ->
-
+     self.x += 1
      reg = new RegExp('@'+self.robot.name,'i')
      console.log "received #{data.text} from #{data.user.screen_name}"
 
-     message = data.text.replace reg, self.robot.name
-     console.log "hubot command: #{message}"
-
-     new TextMessage(data.user.screen_name, message)
-     self.receive new TextMessage(data.user.screen_name, message)
+     msg = data.text.replace reg, self.robot.name
+     console.log "hubot command: #{msg}"
+     tmsg = new TextMessage(data.user.screen_name, msg)
+     self.receive tmsg
      if err
        console.log "received error: #{err}"
 
-   @bot = bot  
+
+   @bot = bot
 
    self.emit "connected"
 
 exports.use = (robot) ->
  new Twitter robot
+
 
 class TwitterStreaming extends EventEmitter
 
