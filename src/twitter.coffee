@@ -9,11 +9,12 @@ class Twitter extends Adapter
 
  send: (user, strings...) ->
    console.log "Sending strings to user: " + user
+   console.log user
    strings.forEach (str) =>
      text = str
      tweetsText = str.split('\n')
      tweetsText.forEach (tweetText) =>
-       @bot.send(user,tweetText)
+       @bot.send(user.user.user, tweetText, user.user.status_id )
 
  reply: (user, strings...) ->
    console.log "Replying"
@@ -42,8 +43,8 @@ class Twitter extends Adapter
      console.log "received #{data.text} from #{data.user.screen_name}"
 
      msg = data.text.replace reg, self.robot.name
-     console.log "hubot command: #{msg}"
-     tmsg = new TextMessage(data.user.screen_name, msg)
+     console.log data
+     tmsg = new TextMessage({ user: data.user.screen_name, status_id: data.id_str }, msg)
      self.receive tmsg
      if err
        console.log "received error: #{err}"
@@ -80,9 +81,9 @@ class TwitterStreaming extends EventEmitter
  tweet: (track,callback) ->
    @post "/1.1/statuses/filter.json?track=#{track}", '', callback
 
- send : (user,tweetText) ->
+ send : (user, tweetText, in_reply_to_status_id) ->
         console.log "send twitt to #{user} with text #{tweetText}"
-        @consumer.post "https://api.twitter.com/1.1/statuses/update.json", @token, @tokensecret, { status: "@#{user} #{tweetText}" },'UTF-8',  (error, data, response) ->
+        @consumer.post "https://api.twitter.com/1.1/statuses/update.json", @token, @tokensecret, { status: "@#{user} #{tweetText}", in_reply_to_status_id: in_reply_to_status_id },'UTF-8',  (error, data, response) ->
           if error
             console.log "twitter send error: #{error} #{data}"
           console.log "Status #{response.statusCode}"
