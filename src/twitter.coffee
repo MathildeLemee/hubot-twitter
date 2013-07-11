@@ -8,8 +8,7 @@ oauth        = require('oauth')
 class Twitter extends Adapter
 
  send: (user, strings...) ->
-   console.log "Sending strings to user: " + user
-   console.log user
+   console.log "Sending strings to user: " + user.screen_name
    strings.forEach (str) =>
      text = str
      tweetsText = str.split('\n')
@@ -22,8 +21,7 @@ class Twitter extends Adapter
        @bot.send(user,text)
  
  command: (command, strings...) ->
-    console.log "Command"
-    console.log command
+    console.log "Command" + command
     @bot.send command, strings...
 
  run: ->
@@ -43,12 +41,10 @@ class Twitter extends Adapter
      console.log "received #{data.text} from #{data.user.screen_name}"
 
      msg = data.text.replace reg, self.robot.name
-     console.log data
      tmsg = new TextMessage({ user: data.user.screen_name, status_id: data.id_str }, msg)
      self.receive tmsg
      if err
        console.log "received error: #{err}"
-
 
    @bot = bot
 
@@ -99,8 +95,6 @@ class TwitterStreaming extends EventEmitter
    console.log "https://#{@domain}#{path}, #{@token}, #{@tokensecret}, null"
 
    request = @consumer.get "https://#{@domain}#{path}", @token, @tokensecret, null
-
-   console.log request
 
    request.on "response",(response) ->
      response.on "data", (chunk) ->
