@@ -21,15 +21,15 @@ You will need to set some environment variables to use this adapter.
 
 ### Heroku
 
-   heroku config:add HUBOT_TWITTER_KEY="key" HUBOT_TWITTER_SECRET="secret" HUBOT_TWITTER_TOKEN="token" HUBOT_TWITTER_TOKEN_SECRET="secret"
+    heroku config:add HUBOT_TWITTER_KEY="key" HUBOT_TWITTER_SECRET="secret" HUBOT_TWITTER_TOKEN="token" HUBOT_TWITTER_TOKEN_SECRET="secret"
 
 
 ### Non-Heroku environment variables
 
-   export HUBOT_TWITTER_KEY="key"
-   export HUBOT_TWITTER_SECRET="secret"
-   export HUBOT_TWITTER_TOKEN="token"
-   export HUBOT_TWITTER_TOKEN_SECRET="secret"
+    export HUBOT_TWITTER_KEY="key"
+    export HUBOT_TWITTER_SECRET="secret"
+    export HUBOT_TWITTER_TOKEN="token"
+    export HUBOT_TWITTER_TOKEN_SECRET="secret"
 
 Then you will need to set the HTTP endpoint on Twilio to point to your server
 and make sure the request type is set to `GET`.
