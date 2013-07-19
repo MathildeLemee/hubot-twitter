@@ -21,8 +21,10 @@ You will need to set some environment variables to use this adapter.
 
 ### Heroku
 
-    heroku config:add HUBOT_TWITTER_KEY="key" HUBOT_TWITTER_SECRET="secret" HUBOT_TWITTER_TOKEN="token" HUBOT_TWITTER_TOKEN_SECRET="secret"
-
+    heroku config:add HUBOT_TWITTER_KEY="key"
+    heroku config:add HUBOT_TWITTER_SECRET="secret"
+    heroku config:add HUBOT_TWITTER_TOKEN="token"
+    heroku config:add HUBOT_TWITTER_TOKEN_SECRET="secret"
 
 ### Non-Heroku environment variables
 
