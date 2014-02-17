@@ -33,7 +33,7 @@ You will need to set some environment variables to use this adapter.
     % export HUBOT_TWITTER_TOKEN="token"
     % export HUBOT_TWITTER_TOKEN_SECRET="secret"
 
-Then you will need to set the HTTP endpoint on Twilio to point to your server
+Then you will need to set the HTTP endpoint on Twitter to point to your server
 and make sure the request type is set to `GET`.
 
 ## Contribute
