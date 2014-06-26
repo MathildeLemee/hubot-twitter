@@ -96,12 +96,15 @@ class TwitterStreaming extends EventEmitter
 
    request = @consumer.get "https://#{@domain}#{path}", @token, @tokensecret, null
 
+   data = ''
    request.on "response",(response) ->
      response.on "data", (chunk) ->
-       parseResponse chunk+'',callback
+       data += chunk
 
-     response.on "end", (data) ->
-       console.log 'end request'
+       if data.indexOf('\r\n') > -1
+         data = data.slice 0, data.indexOf('\r\n')
+         parseResponse data, callback
+         data = ''
 
      response.on "error", (data) ->
        console.log 'error '+data
@@ -109,12 +112,9 @@ class TwitterStreaming extends EventEmitter
    request.end()
 
    parseResponse = (data,callback) ->
-     while ((index = data.indexOf('\r\n')) > -1)
-       json = data.slice(0, index)
-       data = data.slice(index + 2)
-
-       if json.length > 0
-          try
-             callback JSON.parse(json), null
-          catch err
-             console.log err
+     if data.length > 0
+       try
+         callback JSON.parse(data), null
+       catch err
+         console.log "Failed to parse JSON: #{data}"
+         console.log err
