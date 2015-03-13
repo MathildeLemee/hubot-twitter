@@ -54,6 +54,8 @@ exports.use = (robot) ->
  new Twitter robot
 
 
+partial = ''
+
 class TwitterStreaming extends EventEmitter
 
  self = @
@@ -109,6 +111,8 @@ class TwitterStreaming extends EventEmitter
    request.end()
 
    parseResponse = (data,callback) ->
+     data = partial + data
+     partial = ''
      while ((index = data.indexOf('\r\n')) > -1)
        json = data.slice(0, index)
        data = data.slice(index + 2)
@@ -118,3 +122,7 @@ class TwitterStreaming extends EventEmitter
              callback JSON.parse(json), null
           catch err
              console.log err
+
+     partial = data
+     if partial
+       console.log 'Response continuing...'
