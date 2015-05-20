@@ -8,17 +8,17 @@ oauth        = require('oauth')
 class Twitter extends Adapter
 
   send: (user, strings...) ->
-    console.log "Sending strings to user: " + user.screen_name
+    console.log "Sending"
+    strings.forEach (text) =>
+      @bot.send text
+
+  reply: (user, strings...) ->
+    console.log "Replying strings to user: " + user.screen_name
     strings.forEach (str) =>
       text = str
       tweetsText = str.split('\n')
       tweetsText.forEach (tweetText) =>
         @bot.reply(user.user.user, tweetText, user.user.status_id )
-
-  reply: (user, strings...) ->
-    console.log "Replying"
-    strings.forEach (text) =>
-      @bot.reply(user,text)
 
   command: (command, strings...) ->
     console.log "Command" + command
@@ -75,6 +75,13 @@ class TwitterStreaming extends EventEmitter
 
   tweet: (track,callback) ->
     @post "/1.1/statuses/filter.json?track=#{track}", '', callback
+
+  send : (tweetText) ->
+    console.log "Send text #{tweetText}"
+    @consumer.post "https://api.twitter.com/1.1/statuses/update.json", @token, @tokensecret, { status: "#{tweetText}" }, 'UTF-8', (error, data, response) ->
+      if error
+        console.log "twitter send error: #{error} #{data}"
+      console.log "Status #{response.statusCode}"
 
   reply : (user, tweetText, in_reply_to_status_id) ->
     console.log "Reply to #{user} with text #{tweetText}"
