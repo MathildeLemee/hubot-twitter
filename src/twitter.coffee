@@ -78,14 +78,14 @@ class TwitterStreaming extends EventEmitter
 
   send : (tweetText) ->
     console.log "Send text #{tweetText}"
-    @consumer.post "https://api.twitter.com/1.1/statuses/update.json", @token, @tokensecret, { status: "#{tweetText}" }, 'UTF-8', (error, data, response) ->
-      if error
-        console.log "twitter send error: #{error} #{data}"
-      console.log "Status #{response.statusCode}"
+    @_updateStatus "#{tweetText}"
 
   reply : (user, tweetText, in_reply_to_status_id) ->
     console.log "Reply to #{user} with text #{tweetText}"
-    @consumer.post "https://api.twitter.com/1.1/statuses/update.json", @token, @tokensecret, { status: "@#{user} #{tweetText}", in_reply_to_status_id: in_reply_to_status_id },'UTF-8',  (error, data, response) ->
+    @_updateStatus "@#{user} #{tweetText}", in_reply_to_status_id
+
+  _updateStatus : (status, in_reply_to_status_id) ->
+    @consumer.post "https://api.twitter.com/1.1/statuses/update.json", @token, @tokensecret, { status: status, in_reply_to_status_id: in_reply_to_status_id }, 'UTF-8', (error, data, response) ->
       if error
         console.log "twitter send error: #{error} #{data}"
       console.log "Status #{response.statusCode}"
