@@ -3,7 +3,7 @@
 ## Description
 
 This is the [Twitter](http://twitter.com) adapter for hubot that allows you to
-send an tweet to your Hubot and he will send an tweet back with the response.
+send a tweet to your Hubot and he will send a tweet back with the response.
 
 ## Installation
 
